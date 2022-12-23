@@ -17,8 +17,15 @@ function module.new(): MoveHandler
 	return self :: MoveHandler
 end
 
+function module.load(self: MoveHandler, Moves: {[number]: {InputObject: string, Move: string}})
+    
+end
+
 function module.getMoveFromInput(self: MoveHandler, input: InputObject)
 	for i = 1, #self.Moves do
+		if not self.Moves[i] then
+			continue
+		end
 		if not (self.Moves[i].InputObject == input.KeyCode) then
 			continue
 		end
@@ -26,16 +33,17 @@ function module.getMoveFromInput(self: MoveHandler, input: InputObject)
 	end
 end
 
-function module.input(self: MoveHandler, input: InputObject)
+function module.input(self: MoveHandler, input: Enum.KeyCode)
+	print(input)
 	local Move = self:getMoveFromInput(input)
 	if not Move then
 		return
 	end
-    return Move.activate()
+	return Move.activate()
 end
 
 export type MoveHandlerInit = {
-	Moves: { [number]: { InputObject: InputObject, Move: MovesM.MoveFunctions? } },
+	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.MoveFunctions? } },
 }
 export type MoveHandler = typeof(setmetatable({}, module)) & MoveHandlerInit
 

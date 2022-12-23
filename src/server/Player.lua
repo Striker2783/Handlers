@@ -85,7 +85,7 @@ function module.hasEnoughEXP(self: PlayerC)
 	return self.Stats.EXP >= self:calculateNextLevelUp()
 end
 
-function module.input(self: PlayerC, input: InputObject)
+function module.input(self: PlayerC, input: Enum.KeyCode)
 	return self.MoveHandler:input(input)
 end
 

@@ -12,7 +12,7 @@ Players.PlayerAdded:Connect(function(player)
 	Handlers.PlayerHandler:addPlayer(player);
 end)
 
-RS.Events.Input.OnServerEvent(function(Player: Player, Input: InputObject)
+RS.Events.Input.OnServerEvent:Connect(function(Player: Player, Input: Enum.KeyCode)
 	Handlers.PlayerHandler:input(Player, Input)
 end)
 

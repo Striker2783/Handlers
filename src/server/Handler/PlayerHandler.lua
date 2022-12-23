@@ -34,7 +34,7 @@ function module.getPlayerCFromPlayer(self: PlayerHandler, Player: Player): Playe
 	return self.Players[Player]
 end
 
-function module.input(self: PlayerHandler, Player: Player, Input: InputObject)
+function module.input(self: PlayerHandler, Player: Player, Input: Enum.KeyCode)
 	local PlayerC = self:getPlayerCFromPlayer(Player)
 	PlayerC:input(Input)
 end
