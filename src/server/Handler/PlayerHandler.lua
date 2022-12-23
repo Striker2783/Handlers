@@ -24,6 +24,19 @@ function module.addPlayer(self: PlayerHandler, Player: Player)
 	self.Players[Player] = PlayerC
 end
 
+function module.removePlayer(self: PlayerHandler, Player: Player)
+	local PlayerC = self:getPlayerCFromPlayer(Player)
+end
+
+function module.getPlayerCFromPlayer(self: PlayerHandler, Player: Player): PlayerM.PlayerC?
+	return self.Players[Player]
+end
+
+function module.input(self: PlayerHandler, Player: Player, Input: InputObject)
+	local PlayerC = self:getPlayerCFromPlayer(Player)
+	PlayerC:input(Input)
+end
+
 export type PlayerInit = {
 	Players: { [Player]: PlayerM.PlayerC },
 }

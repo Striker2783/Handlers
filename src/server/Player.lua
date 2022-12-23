@@ -12,20 +12,19 @@ function module.new(Player: Player): PlayerC
 		Loaded = false,
 		Stats = {
 			Money = 0,
-			Strength = 1,
 			Level = 1,
 			EXP = 0,
 		},
-		Settings = {},
 		MoveHandler = MoveHandler.new(),
 	}
 	setmetatable(self, module)
+	self:loadDSS()
 	return self :: PlayerC
 end
 
 function module.loadDSS(self: PlayerC)
 	local success, Data = pcall(function()
-		PlayerSaves:GetAsync(self.Player.UserId)
+		return PlayerSaves:GetAsync(self.Player.UserId)
 	end)
 	if success then
 		if Data then
@@ -40,29 +39,38 @@ function module.loadDSS(self: PlayerC)
 	else
 		self.Player:Kick("Failed to load datastore")
 	end
+	self:createLeaderstats()
 end
 
 function module.createLeaderstats(self: PlayerC)
 	local leaderstats = Instance.new("Folder", self.Player)
 	leaderstats.Name = "leaderstats"
 
-	local Level = Instance.new("IntValue", self.Player)
+	local Level = Instance.new("IntValue", leaderstats)
 	Level.Name = "Level"
 	Level.Value = self.Stats.Level
 
-	local Money = Instance.new("IntValue", self.Player)
+	local Money = Instance.new("IntValue", leaderstats)
 	Money.Name = "Money"
-	Money.Value = self.Money
+	Money.Value = self.Stats.Money
+end
+
+function module.toSaveTable(self: PlayerC)
+	return {
+		Stats = self.Stats,
+	}
 end
 
 function module.saveDSS(self: PlayerC)
 	if not self.Loaded then
 		return
 	end
-	local Data = {
-		Stats = self.Stats,
-	}
+	local Data = self:toSaveTable()
 	PlayerSaves:SetAsync(self.Player.UserId, Data)
+end
+--Calculates Base Damage
+function module.calculateBaseDmg(self: PlayerC)
+	return 1.1 ^ (self.Stats.Level - 1) --Every Increase of 1 level increases base damage by 1.1x, starting at 1 for level 1
 end
 
 function module.calculateNextLevelUp(self: PlayerC)
@@ -71,6 +79,10 @@ end
 
 function module.hasEnoughEXP(self: PlayerC)
 	return self.Stats.EXP >= self:calculateNextLevelUp()
+end
+
+function module.input(self: PlayerC, input: InputObject)
+	
 end
 
 function module.levelUp(self: PlayerC)
@@ -83,7 +95,6 @@ function module.levelUp(self: PlayerC)
 	self:levelUp()
 end
 export type Stats = {
-	Strength: number,
 	Level: number,
 	EXP: number,
 	Money: number,
