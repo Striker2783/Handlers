@@ -5,34 +5,30 @@ module.__index = module
 local DSS = game:GetService("DataStoreService")
 local PlayerSaves = DSS:GetDataStore("DebugSave1")
 local MoveHandler = require(script.Parent.Handler.MoveHandler)
-local Settings = require(script.Parent.PlayerSettings)
 
 function module.new(Player: Player): PlayerC
 	local self = {
 		Player = Player,
 		Loaded = false,
-		Money = 0,
 		Stats = {
+			Money = 0,
 			Strength = 1,
 			Level = 1,
 			EXP = 0,
 		},
 		Settings = {},
-		MoveHandler = MoveHandler.new()
+		MoveHandler = MoveHandler.new(),
 	}
 	setmetatable(self, module)
 	return self :: PlayerC
 end
 
-function module:loadDSS(self: PlayerC)
+function module.loadDSS(self: PlayerC)
 	local success, Data = pcall(function()
 		PlayerSaves:GetAsync(self.Player.UserId)
 	end)
 	if success then
 		if Data then
-			if Data.Money then
-				self.Money = Data.Money
-			end
 			for i, _ in pairs(self.Stats) do
 				if not Data.Stats[i] then
 					continue
@@ -46,12 +42,24 @@ function module:loadDSS(self: PlayerC)
 	end
 end
 
+function module.createLeaderstats(self: PlayerC)
+	local leaderstats = Instance.new("Folder", self.Player)
+	leaderstats.Name = "leaderstats"
+
+	local Level = Instance.new("IntValue", self.Player)
+	Level.Name = "Level"
+	Level.Value = self.Stats.Level
+
+	local Money = Instance.new("IntValue", self.Player)
+	Money.Name = "Money"
+	Money.Value = self.Money
+end
+
 function module.saveDSS(self: PlayerC)
 	if not self.Loaded then
 		return
 	end
 	local Data = {
-		Money = self.Money,
 		Stats = self.Stats,
 	}
 	PlayerSaves:SetAsync(self.Player.UserId, Data)
@@ -78,10 +86,10 @@ export type Stats = {
 	Strength: number,
 	Level: number,
 	EXP: number,
+	Money: number,
 }
 export type PlayerCInit = {
 	Player: Player,
-	Money: number,
 	Loaded: boolean,
 	Stats: Stats,
 	MoveHandler: MoveHandler.MoveHandler,
