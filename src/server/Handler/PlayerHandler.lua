@@ -26,6 +26,8 @@ end
 
 function module.removePlayer(self: PlayerHandler, Player: Player)
 	local PlayerC = self:getPlayerCFromPlayer(Player)
+	if not PlayerC then return end
+	PlayerC:leave()
 end
 
 function module.getPlayerCFromPlayer(self: PlayerHandler, Player: Player): PlayerM.PlayerC?

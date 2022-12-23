@@ -61,6 +61,10 @@ function module.toSaveTable(self: PlayerC)
 	}
 end
 
+function module.leave(self: PlayerC)
+	self:saveDSS()
+end
+
 function module.saveDSS(self: PlayerC)
 	if not self.Loaded then
 		return
@@ -82,7 +86,7 @@ function module.hasEnoughEXP(self: PlayerC)
 end
 
 function module.input(self: PlayerC, input: InputObject)
-	
+	return self.MoveHandler:input(input)
 end
 
 function module.levelUp(self: PlayerC)
