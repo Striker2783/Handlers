@@ -10,6 +10,6 @@ local module: Moves.MoveFunctions = {
         print("Deactivated")
     end
 }
-
+setmetatable(module, Moves)
 
 return Moves;

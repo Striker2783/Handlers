@@ -12,7 +12,7 @@ function module.new(Player: Player): MoveHandler
 		Moves = {
 			{
 				InputObject = Enum.KeyCode.One,
-				Move = nil,
+				Move = require(MovesFolder.Fireball),
 			},
 		},
 		Player = Player,
@@ -37,12 +37,12 @@ function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: nu
 	end
 end
 
-function module.getMoveFromInput(self: MoveHandler, input: InputObject) : MovesM.MoveFunctions?
+function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : MovesM.MoveFunctions?
 	for i = 1, #self.Moves do
 		if not self.Moves[i] then
 			continue
 		end
-		if not (self.Moves[i].InputObject == input.KeyCode) then
+		if not (self.Moves[i].InputObject == input) then
 			continue
 		end
 		return self.Moves[i].Move
