@@ -3,8 +3,8 @@ local RS = game:GetService("ReplicatedStorage")
 local default: MoveFunctions = {
 	COOLDOWN = 1, --Cooldown in seconds
 	ACTIVE_TIME = 1, --Active time in seconds
-	deactivate = function(self: MoveFunctions, player: Player) end,
-	activate = function(self: MoveFunctions, player: Player)
+	deactivate = function(self: Move, player: Player) end,
+	activate = function(self: Move, player: Player)
 		task.wait(self.COOLDOWN)
 		RS.Events.Deactivate:Fire(player, script.Name)
 	end,
@@ -18,8 +18,8 @@ export type MoveStats = {
 }
 --Actual type for Move
 export type MoveFunctions = {
-	activate: (MoveFunctions, Player) -> (),
-	deactivate: (MoveFunctions, Player) -> (),
+	activate: (Move, Player) -> (),
+	deactivate: (Move, Player) -> (),
 } & (MoveStats?)
 
 export type Move = typeof(setmetatable({}, default)) & MoveFunctions

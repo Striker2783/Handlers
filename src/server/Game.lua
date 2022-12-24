@@ -17,7 +17,7 @@ RS.Events.Input.OnServerEvent:Connect(function(player: Player, input: Enum.KeyCo
 	Handlers.PlayerHandler:input(player, input)
 end)
 
-RS.Events.Deactivate.OnServerEvent:Connect(function(player, move: string)
+RS.Events.Deactivate.Event:Connect(function(player, move: string)
 	Handlers.PlayerHandler:deactivate(player, move)
 end)
 
