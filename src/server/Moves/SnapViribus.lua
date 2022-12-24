@@ -16,6 +16,7 @@ local module: MovesM.Move = {
 		end
 		--Animations
 		local Character = player.Character
+		local PrimaryPartCFrame = RS.Functions.getCharPrimaryPartPos:InvokeClient(player)
 		local Animator = Character.Humanoid:FindFirstChildOfClass("Animator")
 		local charAnimation = Animator:LoadAnimation(Animation)
 		charAnimation:Play()
@@ -28,13 +29,13 @@ local module: MovesM.Move = {
 			local function Check(Param, Exclude)
 				if i % 2 == 0 then
 					RaycastR = workspace:Raycast(
-						(Character.PrimaryPart.CFrame * CFrame.new(3, 0, -i * 3.6)).Position,
+						(PrimaryPartCFrame * CFrame.new(3, 0, -i * 3.6)).Position,
 						Vector3.new(0, -180, 0) * 100,
 						Param
 					)
 				else
 					RaycastR = workspace:Raycast(
-						(Character.PrimaryPart.CFrame * CFrame.new(-3, 0, -i * 3.6)).Position,
+						(PrimaryPartCFrame * CFrame.new(-3, 0, -i * 3.6)).Position,
 						Vector3.new(0, -180, 0) * 100,
 						Param
 					)
@@ -60,9 +61,9 @@ local module: MovesM.Move = {
 			--Properties of Pillar
 			local Pillar = RS.MoveStuff.Pillar:Clone()
 			Pillar.Material = RaycastR.Material
-			Pillar.Size = Pillar.Size + Vector3.new(0, 0, 1)
+			-- Pillar.Size = Pillar.Size + Vector3.new(0, 0, 1)
 			Pillar.Parent = workspace
-			Pillar.Position = RaycastR.Position
+			Pillar.Position = RaycastR.Position + Vector3.new(0, Pillar.Size.Y / 2, 0)
 			--Builds Pillars up
 			game.TweenService
 				:Create(Pillar, TweenInfo.new(0.2), {
@@ -72,18 +73,18 @@ local module: MovesM.Move = {
 				:Play()
 			--Damages Humanoids that touch it
 			task.delay(0.2, function()
-				for _, parts in pairs(Pillar:GetTouchingParts()) do
-					if not parts or not parts.Parent or not parts.Parent:FindFirstChild("Humanoid") then
+				for _, part in pairs(Pillar:GetTouchingParts()) do
+					if not part or not part.Parent or not part.Parent:FindFirstChild("Humanoid") then
 						return
 					end
-					if parts:IsDescendantOf(Character) then
+					if part:IsDescendantOf(Character) then
 						return
 					end
-					if table.find(Hits, parts.Parent.Humanoid) then
+					if table.find(Hits, part.Parent.Humanoid) then
 						return
 					end
-					table.insert(Hits, parts.Parent.Humanoid)
-					RS.Events.Hit:Fire(player, parts.Parent.Humanoid, DAMAGE)
+					table.insert(Hits, part.Parent.Humanoid)
+					RS.Events.Hit:Fire(player, part.Parent.Humanoid, DAMAGE)
 				end
 			end)
 			--Retracts Pillars
@@ -95,9 +96,9 @@ local module: MovesM.Move = {
 					})
 					:Play()
 			end)
-            --Removes Pillar after 1 sec
+			--Removes Pillar after 1 sec
 			game.Debris:AddItem(Pillar, 1)
-            --Damages other Humanoids who touch it
+			--Damages other Humanoids who touch it
 			Pillar.Touched:Connect(function(Hit)
 				if not Hit or not Hit.Parent or not Hit.Parent:FindFirstChild("Humanoid") then
 					return
@@ -109,12 +110,12 @@ local module: MovesM.Move = {
 					return
 				end
 				table.insert(Hits, Hit.Parent.Humanoid)
-				Hit.Parent.Humanoid:TakeDamage(10)
+				RS.Events.Hit:Fire(player, Hit.Parent.Humanoid, DAMAGE)
 			end)
-			task.wait(.1)
+			task.wait(0.1)
 		end
-        task.wait(2)
-        RS.Events.Deactivate:Fire(player, script.Name)
+		task.wait(2)
+		RS.Events.Deactivate:Fire(player, script.Name)
 	end,
 }
 

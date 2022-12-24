@@ -26,6 +26,9 @@
         "$className": "Folder",
         "getHitPos": {
           "$className": "RemoteFunction"
+        },
+        "getCharPrimaryPartPos": {
+          "$className": "RemoteFunction"
         }
       }
     },
