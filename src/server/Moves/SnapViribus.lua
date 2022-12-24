@@ -22,6 +22,7 @@ local module: MovesM.Move = {
 		task.wait(1 / 6)
 		--Number of pillars
 		for i = 1, PILLARS do
+			--Raycast Result
 			local RaycastR
 			--Checks to see if there's a humanoid in the way
 			local function Check(Param, Exclude)
@@ -61,7 +62,7 @@ local module: MovesM.Move = {
 			Pillar.Material = RaycastR.Material
 			Pillar.Size = Pillar.Size + Vector3.new(0, 0, 1)
 			Pillar.Parent = workspace
-			Pillar.Position = RaycastR.Position + Vector3.new(math.random(1, 5), 0, math.random(1, 5))
+			Pillar.Position = RaycastR.Position
 			--Builds Pillars up
 			game.TweenService
 				:Create(Pillar, TweenInfo.new(0.2), {
@@ -110,6 +111,7 @@ local module: MovesM.Move = {
 				table.insert(Hits, Hit.Parent.Humanoid)
 				Hit.Parent.Humanoid:TakeDamage(10)
 			end)
+			task.wait(.1)
 		end
         task.wait(2)
         RS.Events.Deactivate:Fire(player, script.Name)
