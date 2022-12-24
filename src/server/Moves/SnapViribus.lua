@@ -112,7 +112,7 @@ local module: MovesM.Move = {
 			end)
 		end
         task.wait(2)
-        self:deactivate()
+        RS.Events.Deactivate:Fire(player, script.Name)
 	end,
 }
 
