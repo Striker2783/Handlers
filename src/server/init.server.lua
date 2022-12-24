@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 local PlayerHandlerM = require(script.Parent.Handler.PlayerHandler)
 local MoveM = require(script.Parent.Moves)
 local RS = game:GetService("ReplicatedStorage")
---No metatable this time because we only need 1 of these
 local Handlers = {
 	PlayerHandler = PlayerHandlerM.new(),
 }
