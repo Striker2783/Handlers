@@ -3,7 +3,7 @@ local Moves = require(script.Parent)
 
 local module: Moves.Move = {
 	COOLDOWN = 8,
-    SPEED = 500,
+    SPEED = 100,
     DAMAGE = 10,
     SURVIVE = 5,
 	activate = function(self: Move, player: Player)
