@@ -40,6 +40,13 @@ function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: nu
 	end
 end
 
+function module.changeKeybind(self: MoveHandler, key: Enum.KeyCode, num: number)
+	if not self.Moves[num] then
+		return
+	end
+	self.Moves[num].InputObject = key
+end
+
 function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : MovesM.Move?
 	for i = 1, #self.Moves do
 		if not self.Moves[i] then

@@ -52,6 +52,13 @@ function module.hit(self: PlayerHandler, player: Player, hum: Humanoid, baseDmg:
 	end
 	PlayerC:hit(hum, baseDmg)
 end
+function module.changeKeybind(self: PlayerHandler, player: Player, key: Enum.KeyCode, num: number)
+	local PlayerC = self:getPlayerCFromPlayer(player)
+	if not PlayerC then
+		return
+	end
+	PlayerC.MoveHandler:changeKeybind(key, num)
+end
 --Type forr initial PlayerHandler
 export type PlayerInit = {
 	Players: { [Player]: PlayerM.PlayerC },

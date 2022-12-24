@@ -33,6 +33,7 @@ function module.loadDSS(self: PlayerC)
 					continue
 				end
 				self.Stats[i] = Data.Stats[i]
+				print("Loaded DSS")
 			end
 		end
 		self.Stats.Level = 100
@@ -60,6 +61,10 @@ function module.toSaveTable(self: PlayerC)
 	return {
 		Stats = self.Stats,
 	}
+end
+
+function module.changeKeybind(self: PlayerC, key: Enum.KeyCode, num: number)
+	self.MoveHandler:changeKeybind(key, num)
 end
 
 function module.increaseEXP(self: PlayerC, amount: number)

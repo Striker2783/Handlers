@@ -29,4 +29,8 @@ RS.Events.Hit.Event:Connect(function(player: Player, hum: Humanoid, baseDmg: num
 	Handlers.PlayerHandler:hit(player, hum, baseDmg)
 end)
 
+RS.Events.ChangeKeybind.OnServerEvent:Connect(function(player, input: Enum.KeyCode, moveNum: number)
+	Handlers.PlayerHandler:changeKeybind(player, input, moveNum)
+end)
+
 return module
