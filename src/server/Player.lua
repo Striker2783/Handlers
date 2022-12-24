@@ -7,7 +7,7 @@ local PlayerSaves = DSS:GetDataStore("DebugSave1")
 local MoveHandler = require(script.Parent.Handler.MoveHandler)
 
 function module.new(Player: Player): PlayerC
-	local self = {
+	local self: PlayerCInit = {
 		Player = Player,
 		Loaded = false,
 		Stats = {
@@ -15,12 +15,21 @@ function module.new(Player: Player): PlayerC
 			Level = 1,
 			EXP = 0,
 		},
+		TempStats = {
+			BaseDmg = 0,
+		},
 		MoveHandler = MoveHandler.new(Player),
 	}
 	setmetatable(self, module)
 	self:loadDSS()
 	return self :: PlayerC
 end
+local TempStatUpdates: {[string]: (PlayerC) -> ()} = {
+	BaseDmg = function(self: PlayerC)
+		self.TempStats.BaseDmg = self:calculateBaseDmg()
+	end
+}
+module.TempStatUpdates = TempStatUpdates
 
 function module.loadDSS(self: PlayerC)
 	local success, Data = pcall(function()
@@ -62,13 +71,22 @@ function module.toSaveTable(self: PlayerC)
 	}
 end
 
+function module.updateAllTempStats(self: PlayerC)
+	for _, v in pairs(self.TempStatUpdates) do
+		v(self)
+	end
+end
+
 function module.changeKeybind(self: PlayerC, key: Enum.KeyCode, num: number)
 	self.MoveHandler:changeKeybind(key, num)
 end
 
 function module.increaseEXP(self: PlayerC, amount: number)
 	self.Stats.EXP += amount
-	self:levelUp()
+	local Levels = self:levelUp()
+	if Levels > 0 then
+		module.TempStatUpdates.BaseDmg(self)
+	end
 end
 
 function module.deactivateMove(self: PlayerC, move: string)
@@ -106,25 +124,30 @@ end
 function module.hit(self: PlayerC, hum: Humanoid, baseDmg: number)
 	hum:TakeDamage(baseDmg * self:calculateBaseDmg())
 end
-
-function module.levelUp(self: PlayerC)
+--Returns number of level ups
+function module.levelUp(self: PlayerC) : number
 	if not self:hasEnoughEXP() then
-		return
+		return 0
 	end
 	local EXP = self:calculateNextLevelUp()
 	self.Stats.EXP -= EXP
 	self.Stats.Level += 1
-	self:levelUp()
+	return self:levelUp() + 1
 end
+
 export type Stats = {
 	Level: number,
 	EXP: number,
 	Money: number,
 }
+export type TempStats = {
+	BaseDmg: number,
+}
 export type PlayerCInit = {
 	Player: Player,
 	Loaded: boolean,
 	Stats: Stats,
+	TempStats: TempStats,
 	MoveHandler: MoveHandler.MoveHandler,
 }
 export type PlayerC = typeof(setmetatable({}, module)) & PlayerCInit
