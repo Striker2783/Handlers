@@ -60,15 +60,16 @@ function module.input(self: MoveHandler, input: Enum.KeyCode)
 	end
 	if self.Cooldowns[Move] then return end
 	self.Cooldowns[Move] = true
-	Move.activate(self.Player)
+	Move:activate(self.Player)
 end
 
 function module.deactivate(self: MoveHandler, move: string)
-	local Move = self.getMoveFromName(move)
-	if not Move then
+	local moveC = self.getMoveFromName(move)
+	if not moveC then
 		return
 	end
-	Move.deactivate(self.Player)
+	moveC:deactivate(self.Player)
+	self:addCooldown(moveC)
 end
 
 function module.addCooldown(self: MoveHandler, move: MovesM.Move)
