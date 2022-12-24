@@ -1,4 +1,4 @@
---!strict
+--Handler that handles all the players in the game
 local module = {}
 module.__index = module
 local super = require(script.Parent)
@@ -11,12 +11,7 @@ function module.new(...): PlayerHandler
 		Players = {},
 	}
 	setmetatable(self, module)
-	self:constructor(...)
 	return self :: PlayerHandler
-end
-
-function module.constructor(self: PlayerHandler)
-	super.constructor(self)
 end
 
 function module.addPlayer(self: PlayerHandler, Player: Player)

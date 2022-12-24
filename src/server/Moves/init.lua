@@ -1,20 +1,21 @@
---!strict
+--Module that has the stats for moves
 local module: MoveStats = {
 	COOLDOWN = 1, --Cooldown in seconds
 	ACTIVE_TIME = 1, --Active time in seconds
-	isActivate = false,
+	isActive = false,
 	isOnCooldown = false,
 }
 module.__index = module
+--Type for the Move's stats
 export type MoveStats = {
 	[string]: any,
-	isActivate: boolean,
+	isActive: boolean,
 	isOnCooldown: boolean,
 	COOLDOWN: number,
 	ACTIVE_TIME: number,
 }
 export type MoveFunctions = {
 	activate: (Player, ...any) -> ({ [Humanoid]: number }),
-} & MoveStats
+} & (MoveStats?)
 
 return module

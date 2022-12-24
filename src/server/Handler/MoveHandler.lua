@@ -2,7 +2,9 @@
 local module = {}
 module.__index = module
 
+local MovesFolder = script.Parent.Parent.Moves
 local MovesM = require(script.Parent.Parent.Moves)
+local ToolsM = require(script.Parent.Parent.Tools)
 
 function module.new(): MoveHandler
 	local self: MoveHandlerInit = {
@@ -16,9 +18,16 @@ function module.new(): MoveHandler
 	setmetatable(self, module)
 	return self :: MoveHandler
 end
-
-function module.load(self: MoveHandler, Moves: {[number]: {InputObject: string, Move: string}})
-    
+--Gets the move module from name
+function module.getMoveFromName(name: string)
+	
+end
+--Loads a table of move settings
+function module.load(self: MoveHandler, MoveStats: {[number]: {InputObject: number, Move: string}})
+    for _, v in pairs(MoveStats) do
+		local keycode = ToolsM.getMatchingKeyCodeFromValue(v.InputObject)
+		
+	end
 end
 
 function module.getMoveFromInput(self: MoveHandler, input: InputObject)

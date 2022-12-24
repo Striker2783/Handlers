@@ -1,4 +1,3 @@
---!strict
 local Moves = require(script.Parent)
 
 local module: Moves.MoveFunctions = {
