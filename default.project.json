@@ -2,8 +2,8 @@
   "name": "Handlers",
   "tree": {
     "$className": "DataModel",
-
     "ReplicatedStorage": {
+      "$ignoreUnknownInstances": true,
       "Common": {
         "$path": "src/shared"
       },
@@ -18,29 +18,36 @@
         "Hit": {
           "$className": "BindableEvent"
         }
+      },
+      "Functions": {
+        "$className": "Folder",
+        "getHitPos": {
+          "$className": "RemoteFunction"
+        }
       }
     },
-
     "ServerScriptService": {
+      "$ignoreUnknownInstances": true,
       "Server": {
         "$path": "src/server"
       }
     },
-
     "StarterPlayer": {
       "StarterPlayerScripts": {
+        "$ignoreUnknownInstances": true,
         "Client": {
           "$path": "src/client"
         }
       },
       "StarterCharacterScripts": {
+        "$ignoreUnknownInstances": true,
         "Character": {
           "$path": "src/character"
         }
       }
     },
-
     "Workspace": {
+      "$ignoreUnknownInstances": true,
       "$properties": {
         "FilteringEnabled": true
       },
@@ -68,6 +75,7 @@
       }
     },
     "Lighting": {
+      "$ignoreUnknownInstances": true,
       "$properties": {
         "Ambient": [
           0,
@@ -83,7 +91,8 @@
     "SoundService": {
       "$properties": {
         "RespectFilteringEnabled": true
-      }
+      },
+      "$ignoreUnknownInstances": true
     }
   }
 }

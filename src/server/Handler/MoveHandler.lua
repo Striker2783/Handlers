@@ -48,7 +48,6 @@ function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : Moves
 		if not (self.Moves[i].InputObject == input) then
 			continue
 		end
-		print(self.Moves[i])
 		return self.Moves[i].Move
 	end
 end
