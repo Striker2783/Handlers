@@ -46,7 +46,10 @@ end
 function module.hit(self: PlayerHandler, player: Player, hum: Humanoid, baseDmg: number)
 	--If you want like a Character system that allows for some defense, block, etc, then tell us :-)
 	local PlayerC = self:getPlayerCFromPlayer(player)
-	
+	if not PlayerC then
+		return
+	end
+	PlayerC:hit(hum, baseDmg)
 end
 --Type forr initial PlayerHandler
 export type PlayerInit = {

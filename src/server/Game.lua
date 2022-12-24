@@ -21,6 +21,8 @@ RS.Events.Deactivate.Event:Connect(function(player, move: string)
 	Handlers.PlayerHandler:deactivate(player, move)
 end)
 
-RS.Events.Hit.Event:Connect(function(player: Player, hum: Humanoid, baseDmg: number) end)
+RS.Events.Hit.Event:Connect(function(player: Player, hum: Humanoid, baseDmg: number)
+	Handlers.PlayerHandler:hit(player, hum, baseDmg)
+end)
 
 return module
