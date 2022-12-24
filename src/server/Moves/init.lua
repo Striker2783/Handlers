@@ -19,7 +19,7 @@ export type MoveStats = {
 --Actual type for Move
 export type MoveFunctions = {
 	activate: (Move, Player) -> (),
-	deactivate: (Move, Player) -> (),
+	deactivate: ((Move, Player) -> ())?,
 } & (MoveStats?)
 
 export type Move = typeof(setmetatable({}, default)) & MoveFunctions
