@@ -1,9 +1,15 @@
 --Module that has the stats for moves
-local module: MoveStats = {
+local default: MoveFunctions = {
 	COOLDOWN = 1, --Cooldown in seconds
 	ACTIVE_TIME = 1, --Active time in seconds
+	deactivate = function()
+		return
+	end,
+	activate = function()
+		return {}
+	end,
 }
-module.__index = module
+default.__index = default
 --Type for the Move's stats
 export type MoveStats = {
 	[string]: any,
@@ -16,4 +22,4 @@ export type MoveFunctions = {
 	deactivate: (Player) -> (),
 } & (MoveStats?)
 
-return module
+return default
