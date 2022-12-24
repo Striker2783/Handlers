@@ -41,7 +41,6 @@ function module.loadDSS(self: PlayerC)
 					continue
 				end
 				self.Stats[i] = Data.Stats[i]
-				print("Loaded DSS")
 			end
 		end
 		self.Loaded = true
