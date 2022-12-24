@@ -5,13 +5,11 @@ local Moves = require(script.Parent)
 local module: Moves.Move = {
     COOLDOWN = 5,
     activate = function(self: Moves.Move, Player: Player)
-        print("Activated")
-        task.wait(self.COOLDOWN)
-        print(self.COOLDOWN)
+        --Do stuff
+        
         RS.Events.Deactivate:Fire(Player, script.Name)
     end,
     deactivate = function(self: Moves.Move, Player: Player)
-        print("Deactivated")
     end
 }
 setmetatable(module, Moves)
