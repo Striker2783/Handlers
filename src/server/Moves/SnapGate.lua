@@ -12,8 +12,8 @@ local v3 = {Size = Vector3.new(0.05,0.05,0.05)}
 local module: Move = {
     
 }
-
-export type Move = typeof(module) & MovesM.Move
+setmetatable(module, MovesM)
+export type Move = typeof(module)
 
 return module
 -- game.Players.PlayerAdded:Connect(function(Player)

@@ -1,11 +1,10 @@
 local RS = game:GetService("ReplicatedStorage")
 local Moves = require(script.Parent)
-
+local SPEED = 100
+local DAMAGE = 10
+local SURVIVE = 5
 local module: Moves.Move = {
 	COOLDOWN = 8,
-    SPEED = 100,
-    DAMAGE = 10,
-    SURVIVE = 5,
 	activate = function(self: Move, player: Player)
 		if not player.Character then
 			return
@@ -15,11 +14,11 @@ local module: Moves.Move = {
 		local Clone = RS.MoveStuff.Fireball:Clone()
 		Clone.Parent = workspace
 		Clone.Position = player.Character.PrimaryPart.CFrame:PointToWorldSpace(Vector3.new(0, 0, -5))
-        
+
 		local BV = Instance.new("BodyVelocity", Clone)
 		BV.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 		BV.P = math.huge
-		BV.Velocity = CFrame.new(Clone.Position, pos).LookVector * self.SPEED
+		BV.Velocity = CFrame.new(Clone.Position, pos).LookVector * SPEED
 		local Deb = {}
 		Clone.Touched:Connect(function(Hit)
 			if Hit.Parent:FindFirstChild("Humanoid") then
@@ -29,11 +28,11 @@ local module: Moves.Move = {
 				then
 					table.insert(Deb, Hit.Parent.Humanoid)
 					game.Debris:AddItem(Clone, 0.2)
-                    RS.Events.Hit:Fire(player, Hit.Parent.Humanoid, self.DAMAGE)
+					RS.Events.Hit:Fire(player, Hit.Parent.Humanoid, DAMAGE)
 				end
 			end
 		end)
-		game.Debris:AddItem(Clone, self.SURVIVE)
+		game.Debris:AddItem(Clone, SURVIVE)
 		RS.Events.Deactivate:Fire(player, script.Name)
 	end,
 }

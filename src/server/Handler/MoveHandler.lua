@@ -14,9 +14,18 @@ function module.new(Player: Player): MoveHandler
 				InputObject = Enum.KeyCode.One,
 				Move = require(MovesFolder.Fireball),
 			},
+			{
+				InputObject = Enum.KeyCode.Two,
+				Move = require(MovesFolder.SnapGate),
+			},
+			{
+				InputObject = Enum.KeyCode.Three,
+				Move = require(MovesFolder.SnapViribus),
+			},
 		},
 		Player = Player,
 		Cooldowns = {},
+		activeMoves = {},
 	}
 	setmetatable(self, module)
 	return self :: MoveHandler
@@ -47,7 +56,7 @@ function module.changeKeybind(self: MoveHandler, key: Enum.KeyCode, num: number)
 	self.Moves[num].InputObject = key
 end
 
-function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : MovesM.Move?
+function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode): MovesM.Move?
 	for i = 1, #self.Moves do
 		if not self.Moves[i] then
 			continue
@@ -59,14 +68,36 @@ function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : Moves
 	end
 end
 
+function module.anyMoveActive(self: MoveHandler) : boolean?
+	for _, b in pairs(self.activeMoves) do
+		if not b then
+			continue
+		end
+		return true
+	end
+end
+
 function module.input(self: MoveHandler, input: Enum.KeyCode)
 	local Move = self:getMoveFromInput(input)
 	if not Move then
 		return
 	end
-	if self.Cooldowns[Move] then return end
+	if self.Cooldowns[Move] then
+		return
+	end
+	if not self.Player.Character then
+		return
+	end
+	--You can change this with a bit of code if you want
+	if self:anyMoveActive() then
+		return
+	end
 	self.Cooldowns[Move] = true
 	Move:activate(self.Player)
+end
+
+function module.resetCooldowns(self: MoveHandler)
+	self.Cooldowns = {}
 end
 
 function module.deactivate(self: MoveHandler, move: string)
@@ -90,6 +121,7 @@ export type MoveHandlerInit = {
 	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.Move? } },
 	Player: Player,
 	Cooldowns: { [MovesM.Move]: boolean? },
+	activeMoves: { [MovesM.Move]: boolean? },
 }
 export type MoveHandler = typeof(setmetatable({}, module)) & MoveHandlerInit
 
