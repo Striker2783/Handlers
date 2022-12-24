@@ -21,7 +21,9 @@ end
 --Removes a Player from the Player Handler
 function module.removePlayer(self: PlayerHandler, Player: Player)
 	local PlayerC = self:getPlayerCFromPlayer(Player)
-	if not PlayerC then return end
+	if not PlayerC then
+		return
+	end
 	PlayerC:leave()
 end
 --Gets a PlayerC from the handler based on the Player class
@@ -36,8 +38,15 @@ end
 
 function module.deactivate(self: PlayerHandler, player: Player, move: string)
 	local PlayerC: PlayerM.PlayerC = self:getPlayerCFromPlayer(player)
-	if not PlayerC then return end
+	if not PlayerC then
+		return
+	end
 	PlayerC:deactivateMove(move)
+end
+function module.hit(self: PlayerHandler, player: Player, hum: Humanoid, baseDmg: number)
+	--If you want like a Character system that allows for some defense, block, etc, then tell us :-)
+	local PlayerC = self:getPlayerCFromPlayer(player)
+	
 end
 --Type forr initial PlayerHandler
 export type PlayerInit = {

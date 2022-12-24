@@ -98,6 +98,10 @@ function module.input(self: PlayerC, input: Enum.KeyCode)
 	return self.MoveHandler:input(input)
 end
 
+function module.hit(self: PlayerC, hum: Humanoid, baseDmg: number)
+	hum:TakeDamage(baseDmg * self:calculateBaseDmg())
+end
+
 function module.levelUp(self: PlayerC)
 	if not self:hasEnoughEXP() then
 		return
