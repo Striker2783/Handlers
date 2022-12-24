@@ -40,7 +40,7 @@ function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: nu
 	end
 end
 
-function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : MovesM.MoveFunctions?
+function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : MovesM.Move?
 	for i = 1, #self.Moves do
 		if not self.Moves[i] then
 			continue
@@ -71,7 +71,7 @@ function module.deactivate(self: MoveHandler, move: string)
 	Move.deactivate(self.Player)
 end
 
-function module.addCooldown(self: MoveHandler, move: MovesM.MoveFunctions)
+function module.addCooldown(self: MoveHandler, move: MovesM.Move)
 	self.Cooldowns[move] = true
 	coroutine.wrap(function()
 		task.wait(move.COOLDOWN)
@@ -80,9 +80,9 @@ function module.addCooldown(self: MoveHandler, move: MovesM.MoveFunctions)
 end
 
 export type MoveHandlerInit = {
-	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.MoveFunctions? } },
+	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.Move? } },
 	Player: Player,
-	Cooldowns: { [MovesM.MoveFunctions]: boolean? },
+	Cooldowns: { [MovesM.Move]: boolean? },
 }
 export type MoveHandler = typeof(setmetatable({}, module)) & MoveHandlerInit
 

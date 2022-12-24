@@ -1,11 +1,12 @@
 local Moves = require(script.Parent)
 
-local module: Moves.MoveFunctions = {
+local module: Moves.Move = {
     COOLDOWN = 5,
-    activate = function(Player: Player)
+    activate = function(self: Moves.MoveFunctions, Player: Player)
         print("Activated")
+        getmetatable(self):activate()
     end,
-    deactivate = function()
+    deactivate = function(self: Moves.MoveFunctions, Player: Player)
         print("Deactivated")
     end
 }
