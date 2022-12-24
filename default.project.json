@@ -13,7 +13,7 @@
           "$className": "RemoteEvent"
         },
         "Deactivate": {
-          "$className": "RemoteEvent"
+          "$className": "BindableEvent"
         },
         "Hit": {
           "$className": "BindableEvent"
