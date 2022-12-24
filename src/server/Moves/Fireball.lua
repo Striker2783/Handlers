@@ -2,9 +2,9 @@ local RS = game:GetService("ReplicatedStorage")
 local Moves = require(script.Parent)
 
 local module: Moves.Move = {
-	COOLDOWN = 5,
-    SPEED = 100,
-    DAMAGE = 5,
+	COOLDOWN = 8,
+    SPEED = 500,
+    DAMAGE = 10,
     SURVIVE = 5,
 	activate = function(self: Move, player: Player)
 		if not player.Character then
