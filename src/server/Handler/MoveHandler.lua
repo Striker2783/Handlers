@@ -85,14 +85,17 @@ function module.input(self: MoveHandler, input: Enum.KeyCode)
 	if self.Cooldowns[Move] then
 		return
 	end
-	if not self.Player.Character then
+	if self.Cooldowns[Move] then
 		return
 	end
 	--You can change this with a bit of code if you want
 	if self:anyMoveActive() then
 		return
 	end
-	self.Cooldowns[Move] = true
+	if not self.Player.Character then
+		return
+	end
+	self.activeMoves[Move] = true
 	Move:activate(self.Player)
 end
 
