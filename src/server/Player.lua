@@ -1,4 +1,3 @@
---!strict
 local module = {}
 module.__index = module
 
