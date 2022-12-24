@@ -29,7 +29,7 @@ local module: Moves.Move = {
 				then
 					table.insert(Deb, Hit.Parent.Humanoid)
 					game.Debris:AddItem(Clone, 0.2)
-                    RS.Events.Hit:Fire(player, script.Name, self.DAMAGE)
+                    RS.Events.Hit:Fire(player, Hit.Parent.Humanoid, self.DAMAGE)
 				end
 			end
 		end)
