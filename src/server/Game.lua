@@ -10,7 +10,7 @@ local Handlers = {
 }
 
 Players.PlayerAdded:Connect(function(player)
-	Handlers.PlayerHandler:addPlayer(player);
+	Handlers.PlayerHandler:addPlayer(player)
 end)
 
 RS.Events.Input.OnServerEvent:Connect(function(player: Player, input: Enum.KeyCode)
@@ -18,7 +18,9 @@ RS.Events.Input.OnServerEvent:Connect(function(player: Player, input: Enum.KeyCo
 end)
 
 RS.Events.Deactivate.OnServerEvent:Connect(function(player, move: string)
-	
+	Handlers.PlayerHandler:deactivate(player, move)
 end)
+
+RS.Events.Hit.Event:Connect(function(player: Player, hum: Humanoid, baseDmg: number) end)
 
 return module

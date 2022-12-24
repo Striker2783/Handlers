@@ -32,8 +32,11 @@ function module.getMoveFromName(name: string): MovesM.MoveFunctions?
 end
 --Loads a table of move settings
 function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: number, Move: string } })
-	for _, v in pairs(MoveStats) do
+	for i, v in pairs(MoveStats) do
 		local keycode = ToolsM.getMatchingKeyCodeFromValue(v.InputObject)
+		local Move = self.getMoveFromName(v.Move)
+		self.Moves[i].InputObject = keycode
+		self.Moves[i].Move = Move
 	end
 end
 
@@ -45,18 +48,19 @@ function module.getMoveFromInput(self: MoveHandler, input: Enum.KeyCode) : Moves
 		if not (self.Moves[i].InputObject == input) then
 			continue
 		end
+		print(self.Moves[i])
 		return self.Moves[i].Move
 	end
 end
 
 function module.input(self: MoveHandler, input: Enum.KeyCode)
-	print(input)
 	local Move = self:getMoveFromInput(input)
 	if not Move then
 		return
 	end
 	if self.Cooldowns[Move] then return end
-	return Move.activate()
+	self.Cooldowns[Move] = true
+	Move.activate(self.Player)
 end
 
 function module.deactivate(self: MoveHandler, move: string)

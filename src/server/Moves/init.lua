@@ -18,7 +18,7 @@ export type MoveStats = {
 }
 --Actual type for Move
 export type MoveFunctions = {
-	activate: (Player) -> ({ [Humanoid]: number }),
+	activate: (Player) -> (),
 	deactivate: (Player) -> (),
 } & (MoveStats?)
 
