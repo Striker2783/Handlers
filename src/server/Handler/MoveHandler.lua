@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 --!strict
 local module = {}
 module.__index = module
@@ -6,7 +7,7 @@ local MovesFolder = script.Parent.Parent.Moves
 local MovesM = require(script.Parent.Parent.Moves)
 local ToolsM = require(script.Parent.Parent.Tools)
 
-function module.new(): MoveHandler
+function module.new(Player: Player): MoveHandler
 	local self: MoveHandlerInit = {
 		Moves = {
 			{
@@ -14,19 +15,24 @@ function module.new(): MoveHandler
 				Move = nil,
 			},
 		},
+		Player = Player,
 	}
 	setmetatable(self, module)
 	return self :: MoveHandler
 end
 --Gets the move module from name
-function module.getMoveFromName(name: string)
-	
+function module.getMoveFromName(name: string): MovesM.MoveFunctions?
+	for _, v in pairs(MovesFolder:GetChildren()) do
+		if v.Name ~= name then
+			continue
+		end
+		return require(v) :: MovesM.MoveFunctions
+	end
 end
 --Loads a table of move settings
-function module.load(self: MoveHandler, MoveStats: {[number]: {InputObject: number, Move: string}})
-    for _, v in pairs(MoveStats) do
+function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: number, Move: string } })
+	for _, v in pairs(MoveStats) do
 		local keycode = ToolsM.getMatchingKeyCodeFromValue(v.InputObject)
-		
 	end
 end
 
@@ -51,8 +57,17 @@ function module.input(self: MoveHandler, input: Enum.KeyCode)
 	return Move.activate()
 end
 
+function module.deactivate(self: MoveHandler, move: string)
+	local Move = self.getMoveFromName(move)
+	if not Move then
+		return
+	end
+	Move.deactivate(self.Player)
+end
+
 export type MoveHandlerInit = {
 	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.MoveFunctions? } },
+	Player: Player,
 }
 export type MoveHandler = typeof(setmetatable({}, module)) & MoveHandlerInit
 

@@ -61,6 +61,15 @@ function module.toSaveTable(self: PlayerC)
 	}
 end
 
+function module.increaseEXP(self: PlayerC, amount: number)
+	self.Stats.EXP += amount
+	self:levelUp()
+end
+
+function module.deactivateMove(self: PlayerC, move: string)
+	self.MoveHandler:deactivate(move)
+end
+
 function module.leave(self: PlayerC)
 	self:saveDSS()
 end

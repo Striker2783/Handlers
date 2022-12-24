@@ -33,6 +33,12 @@ function module.input(self: PlayerHandler, Player: Player, Input: Enum.KeyCode)
 	local PlayerC = self:getPlayerCFromPlayer(Player)
 	PlayerC:input(Input)
 end
+
+function module.deactivate(self: PlayerHandler, player: Player, move: string)
+	local PlayerC: PlayerM.PlayerC = self:getPlayerCFromPlayer(player)
+	if not PlayerC then return end
+	PlayerC:deactivateMove(move)
+end
 --Type forr initial PlayerHandler
 export type PlayerInit = {
 	Players: { [Player]: PlayerM.PlayerC },
