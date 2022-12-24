@@ -109,6 +109,7 @@ function module.deactivate(self: MoveHandler, move: string)
 		return
 	end
 	moveC:deactivate(self.Player)
+	self.activeMoves[moveC] = nil
 	self:addCooldown(moveC)
 end
 
