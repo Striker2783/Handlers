@@ -14,6 +14,7 @@ export type MoveStats = {
 	COOLDOWN: number,
 	ACTIVE_TIME: number,
 }
+--Actual type for Move
 export type MoveFunctions = {
 	activate: (Player, ...any) -> ({ [Humanoid]: number }),
 } & (MoveStats?)

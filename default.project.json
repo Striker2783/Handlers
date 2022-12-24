@@ -6,6 +6,15 @@
     "ReplicatedStorage": {
       "Common": {
         "$path": "src/shared"
+      },
+      "Events": {
+        "$className": "Folder",
+        "Input": {
+          "$className": "RemoteEvent"
+        },
+        "Deactivate": {
+          "$className": "RemoteEvent"
+        }
       }
     },
 
