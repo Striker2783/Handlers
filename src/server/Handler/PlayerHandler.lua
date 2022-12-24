@@ -25,6 +25,7 @@ function module.removePlayer(self: PlayerHandler, Player: Player)
 		return
 	end
 	PlayerC:leave()
+	self.Players[Player] = nil
 end
 --Gets a PlayerC from the handler based on the Player class
 function module.getPlayerCFromPlayer(self: PlayerHandler, Player: Player): PlayerM.PlayerC?

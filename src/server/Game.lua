@@ -13,6 +13,10 @@ Players.PlayerAdded:Connect(function(player)
 	Handlers.PlayerHandler:addPlayer(player)
 end)
 
+Players.PlayerRemoving:Connect(function(player)
+	Handlers.PlayerHandler:removePlayer(player)
+end)
+
 RS.Events.Input.OnServerEvent:Connect(function(player: Player, input: Enum.KeyCode)
 	Handlers.PlayerHandler:input(player, input)
 end)

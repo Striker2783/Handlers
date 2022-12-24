@@ -35,6 +35,7 @@ function module.loadDSS(self: PlayerC)
 				self.Stats[i] = Data.Stats[i]
 			end
 		end
+		self.Stats.Level = 100
 		self.Loaded = true
 	else
 		self.Player:Kick("Failed to load datastore")
