@@ -3,10 +3,8 @@ local default: MoveFunctions = {
 	COOLDOWN = 1, --Cooldown in seconds
 	ACTIVE_TIME = 1, --Active time in seconds
 	deactivate = function()
-		return
 	end,
 	activate = function()
-		return {}
 	end,
 }
 default.__index = default
