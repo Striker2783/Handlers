@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
-local PlayerHandlerM = require(script.Parent.Handler.PlayerHandler)
-local MoveM = require(script.Parent.Moves)
+local PlayerHandlerM = require(script.Handler.PlayerHandler)
+local MoveM = require(script.Moves)
 local RS = game:GetService("ReplicatedStorage")
 local Handlers = {
 	PlayerHandler = PlayerHandlerM.new(),
