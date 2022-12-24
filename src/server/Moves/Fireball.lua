@@ -36,7 +36,6 @@ local module: Moves.Move = {
 		game.Debris:AddItem(Clone, self.SURVIVE)
 		RS.Events.Deactivate:Fire(player, script.Name)
 	end,
-	deactivate = function(self: Move, Player: Player) end,
 }
 setmetatable(module, Moves)
 export type Move = typeof(module)

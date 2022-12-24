@@ -8,6 +8,14 @@ local Info = TweenInfo.new(2, Enum.EasingStyle.Sine)
 
 local v2 = {Size = Vector3.new(0.05, 7, 7)}
 local v3 = {Size = Vector3.new(0.05,0.05,0.05)}
+
+local module: Move = {
+    
+}
+
+export type Move = typeof(module) & MovesM.Move
+
+return module
 -- game.Players.PlayerAdded:Connect(function(Player)
 -- 	Player.Chatted:Connect(function(msg)
 -- 		for i,v in pairs(game.Workspace.TeleportLocations:GetChildren()) do
