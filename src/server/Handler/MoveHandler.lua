@@ -77,6 +77,18 @@ function module.anyMoveActive(self: MoveHandler) : boolean?
 	end
 end
 
+function module.anyActiveMoveActive(self: MoveHandler) : boolean?
+	for i, b in pairs(self.activeMoves) do
+		if not b then
+			continue
+		end
+		if i.IS_PASSIVE then
+			continue
+		end
+		return true
+	end
+end
+
 function module.input(self: MoveHandler, input: Enum.KeyCode)
 	local Move = self:getMoveFromInput(input)
 	if not Move then
@@ -88,8 +100,7 @@ function module.input(self: MoveHandler, input: Enum.KeyCode)
 	if self.Cooldowns[Move] then
 		return
 	end
-	--You can change this with a bit of code if you want
-	if self:anyMoveActive() then
+	if self:anyActiveMoveActive() then
 		return
 	end
 	if not self.Player.Character then
