@@ -15,7 +15,7 @@ function module.new(Player: Player): PlayerC
 			Level = 1,
 			EXP = 0,
 		},
-		MoveHandler = MoveHandler.new(),
+		MoveHandler = MoveHandler.new(Player),
 	}
 	setmetatable(self, module)
 	self:loadDSS()

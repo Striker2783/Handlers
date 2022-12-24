@@ -16,6 +16,7 @@ function module.new(Player: Player): MoveHandler
 			},
 		},
 		Player = Player,
+		Cooldowns = {},
 	}
 	setmetatable(self, module)
 	return self :: MoveHandler
@@ -36,7 +37,7 @@ function module.load(self: MoveHandler, MoveStats: { [number]: { InputObject: nu
 	end
 end
 
-function module.getMoveFromInput(self: MoveHandler, input: InputObject)
+function module.getMoveFromInput(self: MoveHandler, input: InputObject) : MovesM.MoveFunctions?
 	for i = 1, #self.Moves do
 		if not self.Moves[i] then
 			continue
@@ -54,6 +55,7 @@ function module.input(self: MoveHandler, input: Enum.KeyCode)
 	if not Move then
 		return
 	end
+	if self.Cooldowns[Move] then return end
 	return Move.activate()
 end
 
@@ -65,9 +67,18 @@ function module.deactivate(self: MoveHandler, move: string)
 	Move.deactivate(self.Player)
 end
 
+function module.addCooldown(self: MoveHandler, move: MovesM.MoveFunctions)
+	self.Cooldowns[move] = true
+	coroutine.wrap(function()
+		task.wait(move.COOLDOWN)
+		self.Cooldowns[move] = nil
+	end)()
+end
+
 export type MoveHandlerInit = {
 	Moves: { [number]: { InputObject: Enum.KeyCode, Move: MovesM.MoveFunctions? } },
 	Player: Player,
+	Cooldowns: { [MovesM.MoveFunctions]: boolean? },
 }
 export type MoveHandler = typeof(setmetatable({}, module)) & MoveHandlerInit
 

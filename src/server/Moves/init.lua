@@ -2,13 +2,11 @@
 local module: MoveStats = {
 	COOLDOWN = 1, --Cooldown in seconds
 	ACTIVE_TIME = 1, --Active time in seconds
-	isOnCooldown = false,
 }
 module.__index = module
 --Type for the Move's stats
 export type MoveStats = {
 	[string]: any,
-	isOnCooldown: boolean,
 	COOLDOWN: number,
 	ACTIVE_TIME: number,
 }
