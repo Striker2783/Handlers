@@ -19,7 +19,7 @@ local module: Moves.Move = {
 		local BV = Instance.new("BodyVelocity", Clone)
 		BV.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 		BV.P = math.huge
-		BV.Velocity = CFrame.new(Clone.Position, pos).LookVector * self.SURVIVE
+		BV.Velocity = CFrame.new(Clone.Position, pos).LookVector * self.SPEED
 		local Deb = {}
 		Clone.Touched:Connect(function(Hit)
 			if Hit.Parent:FindFirstChild("Humanoid") then
