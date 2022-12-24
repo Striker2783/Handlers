@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 --Handler that handles all the players in the game
 local module = {}
 module.__index = module
@@ -58,6 +60,15 @@ function module.changeKeybind(self: PlayerHandler, player: Player, key: Enum.Key
 		return
 	end
 	PlayerC.MoveHandler:changeKeybind(key, num)
+end
+
+function module.closedGame(self: PlayerHandler)
+	if RunService:IsStudio() then
+		return
+	end
+	for _, player in pairs(Players:GetPlayers()) do
+		self:removePlayer(player)
+	end
 end
 --Type forr initial PlayerHandler
 export type PlayerInit = {

@@ -9,6 +9,10 @@ local Handlers = {
 	PlayerHandler = PlayerHandlerM.new(),
 }
 
+game:BindToClose(function()
+	Handlers.PlayerHandler:closedGame()
+end)
+
 Players.PlayerAdded:Connect(function(player)
 	Handlers.PlayerHandler:addPlayer(player)
 end)
